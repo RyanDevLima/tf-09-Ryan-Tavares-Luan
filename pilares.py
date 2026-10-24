@@ -144,9 +144,8 @@ class Atalho(Item):
 
     def __init__(self, nome, destino, pai=None):
         self.__destino = None
-        # Executa a validação antes mesmo de vincular o item ao pai
-        self.redirecionar(destino)
         super().__init__(nome, pai)
+        self.redirecionar(destino)
 
     @property
     def destino(self):
@@ -159,13 +158,10 @@ class Atalho(Item):
         apontamentos para pastas ancestrais que gerariam loops na árvore.
         """
         if novo_destino is self:
-            raise ValueError("Um atalho nao pode apontar para ele mesmo.")
+            raise ValueError("Um atalho nao pode apontar para si mesmo.")
 
-        # Valida se o novo destino é um ancestral direto do atalho atual
         atual = self.pai
         while atual is not None:
-            if novo_destino is ...:  # Tratado polimorficamente por ID de objeto
-                pass
             if novo_destino is atual:
                 raise ValueError("Um atalho nao pode apontar para um de seus ancestrais.")
             atual = atual.pai
@@ -212,9 +208,9 @@ pasta_desktop = Pasta("Desktop", pasta_usuario)
 arquivo_notas = Arquivo("notas.txt", 500, pasta_desktop)
 arquivo_foto = Arquivo("foto.png", 2500, pasta_desktop)
 
-# Criação dos atalhos polimórficos
+# Criação dos atalhos polimórficos válidos
 atalho_para_arquivo = Atalho("atalho_notas", arquivo_notas, pasta_desktop)
-atalho_para_pasta = Atalho("atalho_usuario", pasta_usuario, pasta_desktop)
+atalho_para_pasta = Atalho("atalho_usuario", arquivo_foto, pasta_desktop)
 
 print("--- EXIBIÇÃO DA ÁRVORE COMPLETA ---")
 raiz.mostrar()
